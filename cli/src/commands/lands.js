@@ -14,7 +14,7 @@ export async function listLands() {
       console.log(`${idx + 1}. ${chalk.cyan(land.name)}`);
       console.log(`   Location: ${land.location}`);
       console.log(`   Area: ${land.totalArea} sq units`);
-      console.log(`   ID: ${land._id}\n`);
+      console.log(`   ID: ${land.id ?? land._id}\n`);
     });
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
@@ -35,7 +35,7 @@ export async function getLand() {
     console.log(`Image URL: ${data.imageUrl || 'N/A'}`);
     console.log(`Coordinates: ${JSON.stringify(data.coordinates)}`);
     console.log(`Created: ${new Date(data.createdAt).toLocaleString()}`);
-    console.log(`ID: ${data._id}\n`);
+    console.log(`ID: ${data.id ?? data._id}\n`);
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
   }
@@ -60,7 +60,7 @@ export async function createLand() {
       coordinates: JSON.parse(coordinates.coords || '[]')
     };
     const { data: result } = await landsApi.create(data);
-    console.log(chalk.green(`\nLand created successfully! ID: ${result._id}\n`));
+    console.log(chalk.green(`\nLand created successfully! ID: ${result.id ?? result._id}\n`));
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
   }
@@ -140,7 +140,7 @@ export async function importLands() {
         success++;
       } catch (err) {
         failed++;
-        console.log(chalk.red(`Failed: ${land.name || land._id} - ${err.message}`));
+        console.log(chalk.red(`Failed: ${land.name || land.id || land._id} - ${err.message}`));
       }
     }
 

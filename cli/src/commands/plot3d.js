@@ -16,7 +16,7 @@ export async function getPlot3D() {
     console.log(`Dimensions: ${data.dimensions?.width} x ${data.dimensions?.length} x ${data.dimensions?.height}`);
     console.log(`Colors - Wall: ${data.colors?.wall}, Roof: ${data.colors?.roof}, Ground: ${data.colors?.ground}`);
     console.log(`Created: ${new Date(data.createdAt).toLocaleString()}`);
-    console.log(`ID: ${data._id}\n`);
+    console.log(`ID: ${data.id ?? data._id}\n`);
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
   }
@@ -52,7 +52,7 @@ export async function createPlot3D() {
       }
     };
     const { data: result } = await plot3dApi.create(data);
-    console.log(chalk.green(`\n3D Model created successfully! ID: ${result._id}\n`));
+    console.log(chalk.green(`\n3D Model created successfully! ID: ${result.id ?? result._id}\n`));
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
   }

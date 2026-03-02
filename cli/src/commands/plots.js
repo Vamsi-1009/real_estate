@@ -21,7 +21,7 @@ export async function listPlots() {
       console.log(`   Status: ${statusColor(plot.status)}`);
       console.log(`   Price: ${plot.price || 'N/A'}`);
       console.log(`   Dimensions: ${plot.dimensions?.width || '?'} x ${plot.dimensions?.length || '?'}`);
-      console.log(`   ID: ${plot._id}\n`);
+      console.log(`   ID: ${plot.id ?? plot._id}\n`);
     });
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
@@ -44,7 +44,7 @@ export async function getPlot() {
     console.log(`Dimensions: ${data.dimensions?.width || '?'} x ${data.dimensions?.length || '?'}`);
     console.log(`Coordinates: ${JSON.stringify(data.coordinates)}`);
     console.log(`Created: ${new Date(data.createdAt).toLocaleString()}`);
-    console.log(`ID: ${data._id}\n`);
+    console.log(`ID: ${data.id ?? data._id}\n`);
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
   }
@@ -74,7 +74,7 @@ export async function createPlot() {
       coordinates: JSON.parse(coordinates.coords || '[]')
     };
     const { data: result } = await plotsApi.create(data);
-    console.log(chalk.green(`\nPlot created successfully! ID: ${result._id}\n`));
+    console.log(chalk.green(`\nPlot created successfully! ID: ${result.id ?? result._id}\n`));
   } catch (err) {
     console.log(chalk.red(`Error: ${err.message}`));
   }
@@ -166,7 +166,7 @@ export async function importPlots() {
         success++;
       } catch (err) {
         failed++;
-        console.log(chalk.red(`Failed: ${plot.plotNumber || plot._id} - ${err.message}`));
+        console.log(chalk.red(`Failed: ${plot.plotNumber || plot.id || plot._id} - ${err.message}`));
       }
     }
 
